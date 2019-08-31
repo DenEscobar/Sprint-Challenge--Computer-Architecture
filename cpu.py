@@ -156,11 +156,16 @@ class CPU:
                 ir += 3
             elif command == JMP:
                 ir == operand_a
-
-
-#               [ ] Add the JMP instruction.
-
-#           [ ] Add the JEQ and JNE instructions.
+            elif command == JEQ:
+                if self.fl == 4:
+                    ir == operand_a
+                else:
+                    ir += 2
+            elif command == JNE:
+                if self.fl == 1 or self.fl == 2:
+                    ir == operand_a
+                else:
+                    ir += 2
             elif command == HLT: 
                 running = False
         
