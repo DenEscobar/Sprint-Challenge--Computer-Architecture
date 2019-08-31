@@ -154,8 +154,9 @@ class CPU:
                         self.fl = self.fl + '001' 
                 self.fl = int(self.fl, 2)
                 ir += 3
+            elif command == JMP:
+                ir == operand_a
 
-#             [ ] Add the CMP instruction and equal flag to your LS-8.
 
 #               [ ] Add the JMP instruction.
 
