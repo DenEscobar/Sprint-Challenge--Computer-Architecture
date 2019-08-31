@@ -11,6 +11,16 @@ POP = 0b01000110
 CALL = 0b01010000
 RET = 0b00010001
 ADD = 0b10100000
+CMP = 0b10100111
+JMP = 0b01010100
+JEQ = 0b01010101
+JNE = 0b01010110
+
+# [ ] Add the CMP instruction and equal flag to your LS-8.
+
+# [ ] Add the JMP instruction.
+
+# [ ] Add the JEQ and JNE instructions.
 
 
 class CPU:
@@ -139,6 +149,12 @@ class CPU:
                 self.reg[7] = (sp + 1) % 255
 
                 ir = return_address
+
+#             [ ] Add the CMP instruction and equal flag to your LS-8.
+
+#               [ ] Add the JMP instruction.
+
+#           [ ] Add the JEQ and JNE instructions.
             elif command == HLT: 
                 running = False
         
