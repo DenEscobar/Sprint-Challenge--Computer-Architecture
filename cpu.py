@@ -16,12 +16,6 @@ JMP = 0b01010100
 JEQ = 0b01010101
 JNE = 0b01010110
 
-# [ ] Add the CMP instruction and equal flag to your LS-8.
-
-# [ ] Add the JMP instruction.
-
-# [ ] Add the JEQ and JNE instructions.
-
 
 class CPU:
     """Main CPU class."""
@@ -31,6 +25,7 @@ class CPU:
         self.ram = [0] *256
         self.reg = [0] * 8
         self.pc = 0
+        self.fl = 0b00000
         self.reg[7] = 255
 
     def load(self, file):
@@ -149,6 +144,16 @@ class CPU:
                 self.reg[7] = (sp + 1) % 255
 
                 ir = return_address
+            elif command == CMP:
+                self.fl = str(self.fl)
+                if self.reg[operand_a] == self.reg[operand_b]:
+                        self.fl = self.fl + '100'
+                elif self.reg[operand_a] < self.reg[operand_b]:
+                        self.fl = self.fl + '010' 
+                elif self.reg[operand_a] > self.reg[operand_b]:
+                        self.fl = self.fl + '001' 
+                self.fl = int(self.fl, 2)
+                ir += 3
 
 #             [ ] Add the CMP instruction and equal flag to your LS-8.
 
