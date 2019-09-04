@@ -25,7 +25,6 @@ class CPU:
         self.ram = [0] *256
         self.reg = [0] * 8
         self.pc = 0
-        self.fl = 0b00000
         self.reg[7] = 255
 
     def load(self, file):
@@ -49,7 +48,7 @@ class CPU:
         f = open(file, "r")
         fcont = f.readlines()
         for x in fcont:
-            if x != "\n" and x[0] != "#":
+            if x != "\n" and x[0] != "#" and x[0] != ";":
                 program.append(int(x[:8], 2))
         print(program)
 
@@ -98,7 +97,7 @@ class CPU:
 
         ir = self.pc 
         running = True
-
+        fl = 0b00000
         while running:
             command = self.ram_read(ir)
             operand_a = self.ram_read(ir + 1)
@@ -145,25 +144,26 @@ class CPU:
 
                 ir = return_address
             elif command == CMP:
-                self.fl = str(self.fl)
+                fl = str(0b00000)
                 if self.reg[operand_a] == self.reg[operand_b]:
-                        self.fl = self.fl + '100'
+                        fl = fl + '100'
                 elif self.reg[operand_a] < self.reg[operand_b]:
-                        self.fl = self.fl + '010' 
+                        fl = fl + '010' 
                 elif self.reg[operand_a] > self.reg[operand_b]:
-                        self.fl = self.fl + '001' 
-                self.fl = int(self.fl, 2)
+                        fl = fl + '001' 
+                fl = int(fl, 2)
                 ir += 3
             elif command == JMP:
-                ir == operand_a
+                ir = self.reg[operand_a]
             elif command == JEQ:
-                if self.fl == 4:
-                    ir == operand_a
+                if fl == 4:
+                    ir = self.reg[operand_a]
                 else:
                     ir += 2
             elif command == JNE:
-                if self.fl == 1 or self.fl == 2:
-                    ir == operand_a
+                if fl == 1 or fl == 2:
+                    ir = self.reg[operand_a]
+                    
                 else:
                     ir += 2
             elif command == HLT: 
